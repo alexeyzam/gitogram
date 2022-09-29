@@ -1,4 +1,6 @@
 # loft_school
+For open on github pages using:
+https://alexeyzam.github.io/gitogram/dist/
 
 ## Project setup
 ```
