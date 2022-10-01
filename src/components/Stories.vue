@@ -5,7 +5,7 @@
         :key="user.name"
         class="user-item"
     >
-      <img :src="user.img" :alt="user.name">
+      <img :src="user.img" :alt="user.name" class="user-image">
     </div>
 
 
@@ -79,6 +79,10 @@ export default {
 }
 img{
   background-color: #FAFAFA;
+  border-radius: 50%;
+  border: 2px solid #A6328D;
+  padding: 6px;
 }
+
 
 </style>

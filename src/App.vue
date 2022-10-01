@@ -13,15 +13,18 @@
         </div>
       </template>
     </Header>
+    <div class="content-row">
+      <div class="content">
 
-    <Content>
-      <template v-slot:postFrame>
-        <div>
-          <PostFrame/>
-        </div>
-      </template>
-    </Content>
+        <Content>
+          <template v-slot:postFrame>
 
+            <PostFrame/>
+
+          </template>
+        </Content>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -53,7 +56,6 @@ export default {
 
 .header {
   display: flex;
-  margin: 20px;
   height: 40px;
   justify-content: space-between;
   background: #FAFAFA;
@@ -63,8 +65,24 @@ export default {
 .stories {
   display: flex;
   justify-content: space-between;
-  margin-top: 44px;
+  padding-top: 44px;
   background: #FAFAFA;
   flex-wrap: wrap;
 }
+
+.content-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 979px;
+  justify-content: center;
+}
+
+
 </style>
