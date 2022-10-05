@@ -2,9 +2,9 @@
   <div class="container">
     <Header>
       <template v-slot:top>
-        <div class="header">
+
           <AppBar></AppBar>
-        </div>
+
       </template>
 
       <template v-slot:middle>
@@ -54,13 +54,7 @@ export default {
   flex-flow: wrap column;
 }
 
-.header {
-  display: flex;
-  height: 40px;
-  justify-content: space-between;
-  background: #FAFAFA;
-  flex-direction: row;
-}
+
 
 .stories {
   display: flex;
