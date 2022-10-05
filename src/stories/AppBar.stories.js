@@ -1,14 +1,31 @@
 import AppBar from "@/components/AppBar";
 
 export default {
-    // title: 'AppBar',
+    title: 'Header/AppBar',
     component: AppBar,
 }
 
 
-export const Template = (args) => ({
+const Template = (args) => ({
     components: {AppBar},
-    // Then, the spread values can be accessed directly in the template
-    template: '<AppBar></AppBar>',
+    setup() {
+        return { ...args };
+    },
+    template: '<AppBar :height="height"></AppBar>',
 });
+
+
+
+export const TemplateBinded = Template.bind({})
+TemplateBinded.args={
+    height: 40
+}
+
+TemplateBinded.story={
+    name:'AppBar'
+}
+
+
+
+
 

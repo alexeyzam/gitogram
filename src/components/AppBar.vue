@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header" :style="{height: `${height}px`}">
     <Logo name="Gitogram" class="menu-logo"></Logo>
     <div class="action-menu">
       <svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg" class="menu-items">
@@ -24,6 +24,12 @@ import Logo from "@/components/Logo";
 
 export default {
   name: "AppBar",
+  props: {
+    height: {
+      type: Number,
+      default: 40,
+    }
+  },
   components: {Logo},
   data() {
     return {title: 'Gitogram/'}
@@ -39,7 +45,6 @@ export default {
 <style scoped>
 .header {
   display: flex;
-  height: 40px;
   justify-content: space-between;
   background: #FAFAFA;
   flex-direction: row;
@@ -67,10 +72,6 @@ export default {
 .round-image{
   border-radius: 50%;
 
-}
-
-.logout {
-  height: 50%;
 }
 
 </style>
