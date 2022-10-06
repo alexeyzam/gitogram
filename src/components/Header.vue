@@ -1,7 +1,6 @@
 <template>
     <slot name="top"></slot>
     <slot name="middle"></slot>
-  <div></div>
 </template>
 
 <script>

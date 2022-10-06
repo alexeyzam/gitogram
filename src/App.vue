@@ -49,20 +49,11 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-flow: wrap column;
-}
+@import "@/styles/app.css";
 
 
 
-.stories {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 44px;
-  background: #FAFAFA;
-  flex-wrap: wrap;
-}
+
 
 .content-row {
   display: flex;

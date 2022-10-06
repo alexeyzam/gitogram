@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    flex-flow: wrap column;
+}
+.stories {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 44px;
+    background: #FAFAFA;
+    flex-wrap: wrap;
+}

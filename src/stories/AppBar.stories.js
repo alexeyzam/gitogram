@@ -1,7 +1,7 @@
 import AppBar from "@/components/AppBar";
 
 export default {
-    title: 'Header/AppBar',
+    title: 'Top/Header/Subcomponents/AppBar',
     component: AppBar,
 }
 
