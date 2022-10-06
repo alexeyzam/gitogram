@@ -1,10 +1,11 @@
 <template>
   <div class="content-wrapper">
     <div class="content-top">
-
-      <img src="../assets/images/Josh.jpg" class="items">
-
-      <div class="items">Josh</div>
+      <Profile
+          :src="userImage"
+          :username="'Josh'"
+          class="items"
+      />
     </div>
 
     <slot name="postFrame"></slot>
@@ -20,13 +21,19 @@
 
 <script>
 import Toggler from "@/components/Toggler";
+import Profile from "@/components/Profile";
 
 export default {
   name: "Content",
-  components: {Toggler},
+  components: {Toggler,Profile},
   data() {
     return {
       isViewIssue: false
+    }
+  },
+  computed:{
+    userImage(){
+      return require.context('../assets/images', false, /\.jpg$/)('./'+'Josh.jpg')
     }
   }
 }
@@ -86,7 +93,6 @@ export default {
   justify-content: flex-start;
   align-items: center;
   gap: 14px;
-
 }
 
 </style>
