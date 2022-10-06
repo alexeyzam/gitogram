@@ -1,7 +1,7 @@
 import Stories from "@/components/Stories";
 
 export default {
-    title: 'Top/Header/Subcomponents/Stories',
+    title: 'MainPage/App/Header/Subcomponents/Stories',
     template: Stories,
 }
 

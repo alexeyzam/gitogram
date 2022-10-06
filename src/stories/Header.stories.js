@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import AppBar from "@/components/AppBar";
 import Stories from "@/components/Stories";
 export default {
-    title: 'Top/Header',
+    title: 'MainPage/App/Header',
     component: Header,
     subcomponents:[AppBar,Stories]
 }

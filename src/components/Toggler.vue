@@ -21,7 +21,12 @@
 <script>
 export default {
   name: "Toggler",
-  props: ['modelValue'],
+  props: {
+    modelValue:{
+      type:Boolean,
+      default:false,
+    }
+  },
 }
 </script>
 

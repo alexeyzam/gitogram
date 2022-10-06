@@ -1,7 +1,7 @@
 import Logo from "@/components/Logo";
 
 export default {
-    title: 'Top/Header/Subcomponents/Logo',
+    title: 'MainPage/App/Header/Subcomponents/Logo',
     component: Logo,
 }
 
