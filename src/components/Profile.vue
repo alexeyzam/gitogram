@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile">
   <img :src=src style="height: 100%">
   <div class="items">{{username}}</div>
   </div>
@@ -22,4 +22,10 @@ export default {
 </script>
 
 <style scoped>
+.profile{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 14px;
+}
 </style>

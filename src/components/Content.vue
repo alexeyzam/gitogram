@@ -90,9 +90,7 @@ export default {
   height: 100%;
   display: flex;
   margin: 2px;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 14px;
+
 }
 
 </style>
