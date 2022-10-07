@@ -15,7 +15,8 @@ export default {
     },
     src:{
       type:String,
-      required: true,
+      required: false,
+      default:require.context('../assets/images', false, /\.jpg$/)('./Josh.jpg')
     }
   }
 }

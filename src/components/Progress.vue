@@ -1,5 +1,5 @@
 <template>
-<div class="progress" :style="{width: `${width}%`,height:`${height}px`}">
+<div class="progress" :style="{width: `${width}%`,height:`${height}px`,background: color}">
 
 </div>
 </template>
@@ -23,8 +23,13 @@ export default {
     progressReset:{
       type:Boolean,
       default:false,
-    }
+    },
+    color:{
+      type:String,
+      default: 'Green',
+    },
   },
+  emits:['progress-finished'],
   data(){
     return {
       width:0,
@@ -53,6 +58,7 @@ export default {
     },
     stopProgress(){
       this.clearProgress()
+      this.$emit('progress-finished')
     },
     addWidth(){
 
@@ -72,8 +78,4 @@ export default {
 </script>
 
 <style scoped>
-.progress{
-  height: 1px;
-  background: green;
-}
 </style>
