@@ -14,8 +14,8 @@
     <template v-if="isViewIssue && issues">
       <div class="issue-comment" v-for="issue in issues">
 
-        <div class="issue-autor">{{ issue.user.login }}</div>
-        <div class="issue-title"> {{issue.body}}</div>
+        <div class="issue-autor"><span>{{ issue.user.login }}</span></div>
+        <div class="issue-title"><span>{{issue.body}}</span></div>
       </div>
     </template>
   </div>
@@ -103,6 +103,7 @@ export default {
   font-size: 14px;
   line-height: 22px;
   color: #262626;
+  white-space: nowrap;
 }
 
 .issue-title {
@@ -112,6 +113,7 @@ export default {
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
+  white-space: pre-line;
 }
 
 .items {
