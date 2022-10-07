@@ -3,21 +3,38 @@ import Stories from "@/components/Stories";
 export default {
     title: 'MainPage/App/Header/Subcomponents/Stories',
     template: Stories,
+
 }
 
 
-export  const Template = () => ({
+const Template = (args) => ({
     components: {Stories},
-    template: `<div class="stories">
-    <Stories></Stories>
-    </div>
+    setup(){
+        return {...args}
+    },
+    template: `
+      <div class="stories">
+      <Stories :users="users"></Stories>
+      </div>
     `,
-    story:{
-
-    }
 
 
 })
-Template.story={
+
+export const TemplateBinded = Template.bind({})
+TemplateBinded.args = {
+    users: [
+        {
+            stars: 10,
+            forks: 300,
+            username: 'Some user',
+            name: 'Some repo',
+            description: 'Some description',
+            img: require.context('../assets/images', false, /\.jpg$/)('./Josh.jpg'),
+        }
+    ],
+}
+
+TemplateBinded.story = {
     name: 'Stories'
 }
