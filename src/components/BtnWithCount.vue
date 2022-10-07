@@ -82,10 +82,6 @@ export default {
   width: 72px;
 }
 
-.btn:hover {
-  background: lightgrey;
-}
-
 
 .btn-with-count {
   display: flex;

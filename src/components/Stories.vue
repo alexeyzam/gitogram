@@ -2,8 +2,9 @@
 
     <div
         v-for="user in users"
-        :key="user.name"
+        :key="user.username"
         class="user-item"
+        @click="$emit('user-selected',user)"
     >
       <img :src="user.img" :alt="user.name" class="user-image">
     </div>
@@ -15,56 +16,11 @@
 
 export default {
   name: "Stories",
-  data(){
-    return {
-      users:[
-        {
-          name:'Josh',
-        img:'@src/assets/images/Josh.jpg',
-        },
-        {
-          name:'Andrew',
-          img:'@src/assets/images/Andrew.jpg',
-        },
-        {
-          name:'Camille',
-          img:'@src/assets/images/Camille.jpg',
-        },
-        {
-          name:'Marselle',
-          img:'@src/assets/images/Marselle.jpg',
-        },
-        {
-          name:'Piter',
-          img:'@src/assets/images/Piter.jpg',
-        },
-        {
-          name:'Can',
-          img:'@src/assets/images/Can.jpg',
-        },
-        {
-          name:'Iloveanime',
-          img:'@src/assets/images/Iloveanime.jpg',
-        },
-        {
-          name:'Diself',
-          img:'@src/assets/images/Diself.jpg',
-        },
-        {
-          name:'Gaptor',
-          img:'@src/assets/images/Gaptor.jpg',
-        },
-        {
-          name:'Camilr',
-          img:'@src/assets/images/Camilr.jpg'
-        }
-
-      ]
+  props:{
+    users:{
+      default:[],
     }
   },
-  mounted() {
-    this.users.forEach(user=>user.img=require.context('../assets/images', false, /\.jpg$/)('./'+user.name+'.jpg'))
-  }
 }
 </script>
 
@@ -82,6 +38,7 @@ img{
   border-radius: 50%;
   border: 2px solid #A6328D;
   padding: 6px;
+  height: 80px;
 }
 
 

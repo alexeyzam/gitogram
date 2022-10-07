@@ -1,13 +1,13 @@
 <template>
   <div class="post-frame-container">
-    <h1 class="post-frame-header">React.js</h1>
-    <p>Javascript library</p>
+    <h1 class="post-frame-header">{{user.name}}</h1>
+    <p>{{user.description}}</p>
 
     <div class="post-buttons">
       <BtnWithCount
           text="Star"
           position="first"
-          count="156k"
+          :count="user.stars.toString()"
       >
         <template v-slot:icon>
           <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,7 +20,7 @@
       <BtnWithCount
           text="Fork"
           position="second"
-          count="4"
+          :count="user.forks.toString()"
       >
         <template v-slot:icon>
           <svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,6 +41,12 @@ import BtnWithCount from "@/components/BtnWithCount";
 export default {
   name: "Description",
   components: {BtnWithCount},
+  props:{
+    user:{
+      default:{},
+      required:true,
+    }
+  },
 }
 </script>
 

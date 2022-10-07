@@ -6,17 +6,33 @@ export default {
     subcomponents:{PostFrame}
 }
 
-export const Template = () => ({
+const Template = (args) => ({
     components: {Content,PostFrame},
-    template: `<Content>
+    setup(){
+        return {args}
+    },
+    template: `<Content v-bind="args">
     <template v-slot:postFrame>
 
-      <PostFrame/>
+      <PostFrame v-bind="args"/>
 
     </template>
     </Content>`
 })
 
-Template.story={
-    name:'Content',
+
+export const TemplateBinded = Template.bind({})
+TemplateBinded.args={
+    user:{
+        stars:10,
+        forks:300,
+        username:'Some user',
+        name:'Some repo',
+        description:'Some description',
+        img:'',
+    },
+}
+
+TemplateBinded.story={
+    name:'Content'
 }

@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     handlerLogout() {
-      console.log('logout')
     }
   }
 }
