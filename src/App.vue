@@ -34,8 +34,7 @@ import Stories from "@/components/Stories";
 import Content from "@/components/Content";
 import Header from "@/components/Header";
 import PostFrame from "@/components/PostFrame";
-import {getTrendigs} from "@/api/rest/trendings";
-
+import {mapGetters,mapActions} from 'vuex'
 export default {
   name: 'App',
   components: {
@@ -50,30 +49,22 @@ export default {
       users:[],
     }
   },
+  computed:{
+    ...mapGetters({
+                 'getUsers':'getUsers'
+               })
+  },
   methods:{
-    loadStories({items,links}){
-      items.forEach(v=>{
-        this.users.push(
-            {
-              username:v.owner.login,
-              img:v.owner.avatar_url,
-              name:v.name,
-              description:v.description,
-              issues_url:v.issues_url.replace('{/number}',''),
-              stars:v.stargazers_count,
-              forks:v.forks
-            }
-            )
-
-      })
-
+    ...mapActions({
+      'fetchTrends':'fetchTrends'
+    }),
+    loadStories(){
+        this.users=this.getUsers
     }
   },
   async mounted() {
-    const data= await getTrendigs({lang:'react'})
-    this.loadStories({
-      items:data.data.items,
-      links:data.headers.link.split(',')})
+    await this.$store.dispatch('fetchTrends')
+    this.loadStories()
   },
 }
 </script>
