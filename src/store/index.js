@@ -7,6 +7,7 @@ export default createStore({
         repoReadmeData:[],
         loading:false,
         error:null,
+        isUserLogged:false,
     },
     getters: {
         getUsers(state) {
