@@ -1,6 +1,6 @@
 <template>
   <div class="container" >
-   <router-view v-if="isUserLogged"/>
+   <router-view v-if="isLoggedIn"/>
     <LoginPage v-else/>
   </div>
 
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState,mapActions} from 'vuex'
 import LoginPage from "@/components/Login/LoginPage";
 
 export default {
@@ -16,9 +16,10 @@ export default {
   components: {LoginPage},
   computed: {
     ...mapState({
-      'isUserLogged': 'isUserLogged'
+      isLoggedIn: state=>state.user.isLoggedIn
     })
-  }
+  },
+
 }
 </script>
 

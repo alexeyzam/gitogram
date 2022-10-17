@@ -1,13 +1,16 @@
 import {createStore} from 'vuex';
 import {getRepoReadme, getTrendigs} from "@/api/rest/githubRestQuery";
+import user from './modules/user'
 
 export default createStore({
+    modules:{
+        user
+    },
     state:{
         repos:[],
         repoReadmeData:[],
         loading:false,
         error:null,
-        isUserLogged:false,
     },
     getters: {
         getUsers(state) {

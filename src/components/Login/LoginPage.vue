@@ -7,7 +7,7 @@
     <p>{{blockText}}</p>
   </div>
   <div class="button-auth-block">
-  <ButtonAuth @click="handlerLogin"/>
+  <ButtonAuth @click="handlerStartLogin"/>
   </div>
   <div class="gitogram-image">
     <img src="@/assets/images/device-macbook.jpg">
@@ -23,6 +23,7 @@
 <script>
 import Logo from "@/components/Logo";
 import ButtonAuth from "@/components/Login/ButtonAuth";
+import {mapActions} from "vuex";
 export default {
   name: "LoginPage",
   components: {Logo,ButtonAuth},
@@ -31,6 +32,18 @@ export default {
       blockText:'More than just one repository.\n' +
           'This is our digital world.',
       bottomText:'© Gitogram from Loftschool'
+    }
+  },
+  methods:{
+    ...mapActions({
+      dispatchStartUserAuth:'user/dispatchStartUserAuth'
+    }),
+    handlerStartLogin(){
+      const params = new URLSearchParams();
+      params.append('client_id', process.env.VUE_APP_CLIENT_ID);
+      params.append('scope', 'repo:status read:user');
+      const githubAuthApi = "https://github.com/login/oauth/authorize";
+      window.location.href = `${githubAuthApi}?${params}`;
     }
   },
 
