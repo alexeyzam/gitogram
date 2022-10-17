@@ -4,7 +4,7 @@
         v-for="user in users"
         :key="user.username"
         class="user-item"
-        @click="$emit('user-selected',user)"
+        @click="handlerUserSelected(user)"
     >
       <img :src="user.img" :alt="user.name" class="user-image">
     </div>
@@ -21,6 +21,17 @@ export default {
       default:[],
     }
   },
+  methods:{
+    handlerUserSelected(user){
+      this.$emit('user-selected',user)
+      this.$router.push({
+        name:'stories',
+        query:{
+          id:user.id
+        }
+      })
+    }
+  }
 }
 </script>
 

@@ -1,3 +1,3 @@
 export const urlPaths={
-    searchRepositories:'/search/repositories'
+    searchRepositories:'/search/repositories',
 }

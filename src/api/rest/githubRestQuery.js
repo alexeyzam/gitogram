@@ -31,3 +31,8 @@ export const apiGet=({basUrl,params:params={}})=>{
     const url = queryParams.toString()?`${basUrl}?${params}`:basUrl
     return makeRequest({url,method:'get'})
 }
+export const getRepoReadme=({owner,repo})=>{
+    const headers={'accept': 'application/vnd.github.v3.html+json'}
+    const url=`/repos/${owner}/${repo}/readme`
+    return makeRequest({url,method:'get',data:{},headers})
+}
