@@ -24,7 +24,12 @@ export default {
   methods:{
     handlerUserSelected(user){
       this.$emit('user-selected',user)
-      this.$router.push({name:'repo-slider'})
+      this.$router.push({
+        name:'stories',
+        query:{
+          id:user.id
+        }
+      })
     }
   }
 }

@@ -57,7 +57,7 @@ export default {
 
     },
     stopProgress(){
-      this.clearProgress()
+      // this.clearProgress()
       this.$emit('progress-finished')
     },
     addWidth(){
@@ -78,4 +78,9 @@ export default {
 </script>
 
 <style scoped>
+.progress{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
 </style>

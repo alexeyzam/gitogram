@@ -1,10 +1,8 @@
 <template>
-  <div :style="{'align-self': align}">
+
 <button
-    :style="{color: color,backgroundColor: backgroundColor}"
     class="btn"
 >{{text}}</button>
-  </div>
 </template>
 
 <script>
@@ -33,8 +31,23 @@ export default {
 
 <style scoped>
 .btn{
+  width: 270px;
+  height: 44px;
+  left: 53px;
+  top: 591px;
+
+  background: #31AE54;
   border-radius: 5px;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
   font-size: 16px;
+  line-height: 22px;
+  color: #FFFFFF;
+  border: none;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: -0.15px;
 }
 
 </style>

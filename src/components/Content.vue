@@ -24,7 +24,7 @@
 <script>
 import Toggler from "@/components/Toggler";
 import Profile from "@/components/Profile";
-import {apiGet} from "@/api/rest/trendings";
+import {apiGet} from "@/api/rest/githubRestQuery";
 
 export default {
   name: "Content",
@@ -87,8 +87,6 @@ export default {
   justify-content: flex-start;
   padding: 0px;
   gap: 14px;
-
-
 }
 
 .issue-comment {

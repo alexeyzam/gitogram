@@ -1,9 +1,10 @@
 import {createStore} from 'vuex';
-import {getTrendigs} from "@/api/rest/trendings";
+import {getRepoReadme, getTrendigs} from "@/api/rest/githubRestQuery";
 
 export default createStore({
     state:{
         repos:[],
+        repoReadmeData:[],
         loading:false,
         error:null,
     },
@@ -21,7 +22,13 @@ export default createStore({
                     forks: v.forks
                 }
             })
-        }
+        },
+
+        getRepoReadme(state){
+            return (data)=>{
+            const value = state.repoReadmeData.find(v=>v.id===data.id)
+            return value?.response}
+        },
     },
     mutations:{
         startLoadingData(state){
@@ -39,6 +46,12 @@ export default createStore({
             state.repos=[]
             state.error=payload.error
         },
+        successLoadReadmeData(state,payload){
+            const index = state.repoReadmeData.findIndex(v=>v.id===payload.id)
+            if (index ===-1){state.repoReadmeData.push(payload)}
+            state.repoReadmeData[index]=payload
+        },
+
 
     },
     actions:{
@@ -51,6 +64,16 @@ export default createStore({
                 console.error(error)
                 state.commit('failLoadingData',{error})
             }
+
+        },
+        async fetchReadme(state,payload){
+            try {
+                const response=await getRepoReadme({owner:payload.username,repo:payload.name})
+                state.commit('successLoadReadmeData',{id:payload.id,response:response.data})
+            }catch (error){
+                state.commit('successLoadReadmeData',{id:payload.id,response:''})
+            }
+
 
         }
     },

@@ -7,8 +7,8 @@ export default [
         component:Home,
     },
     {
-        path: "/repo-slider",
-        name:'repo-slider',
+        path: "/stories",
+        name:'stories',
         component:Sliders,
     }
 ]
