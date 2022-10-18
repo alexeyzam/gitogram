@@ -1,12 +1,12 @@
 <template>
   <div class="sliders">
-<div class="menu-logo"><Logo name="Gitogram"></Logo><CloseButton @click="handlerCloseButton"/></div>
-  <div class="row">
-
-    <Slider v-for="(user,index) in users" :data="user" :index="index" :key="user.id"/>
-
-
-</div>
+    <div class="menu-logo">
+      <Logo name="Gitogram"></Logo>
+      <CloseButton @click="handlerCloseButton"/>
+    </div>
+    <div class="row">
+      <Slider v-for="(user,index) in users" :data="user" :index="index" :key="user.id"/>
+    </div>
   </div>
 
 </template>
@@ -43,25 +43,29 @@ export default {
 
 <style scoped>
 .menu-logo{
-  top: 44.5px;
+  position: relative;
+  margin-top: 44.5px;
   display: flex;
   color: #FFFFFF;
   display: flex;
   height: 40px;
-  left: 121px;
-  right: 121px;
-  position: absolute;
+  margin-left: 121px;
+  margin-right: 121px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+
 }
 
 .row{
   display: flex;
-  justify-content: center;
+  /*justify-content: center;*/
   flex-direction: row;
   align-items: flex-start;
   position: relative;
+  top: 175px;
+  /*margin-left: 1px;*/
 }
 
 .sliders{

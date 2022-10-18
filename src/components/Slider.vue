@@ -1,11 +1,10 @@
 <template>
+  <div :class="isSlideActive?'col-slider-active':'col-slider-inactive'"  :style="{left: leftPosition}">
   <div class="row-slider"
        :class="isSlideActive?'active-slide':'inactive-slide'"
-       :style="{left: leftPosition}">
+       >
     <ButtonLeft v-if="isVisibleLeftButton" @click="handlerLeftButton"/>
-    <div v-else style="width: 40px">
-
-    </div>
+    <div v-else style="width: 40px"/>
     <div class="slider">
 
 
@@ -15,6 +14,7 @@
         </div>
         <div class="profile">
           <Profile :src="data.img" :username="data.username"></Profile>
+          {{index}}
         </div>
       </div>
       <div class="divider"/>
@@ -33,8 +33,9 @@
 
     </div>
     <ButtonRight v-if="isVisibleRightButton" @click="handlerRightButton"/>
+    <div v-else style="width: 40px"/>
   </div>
-
+  </div>
 </template>
 
 <script>
@@ -85,8 +86,11 @@ export default {
         leftPosition() {
           // const windowWidth=window.innerWidth
           const windowWidth = 1440
-          if (this.isSlideActive) return `${windowWidth / 2 - 375 / 2}px`
-          return `${(this.index - this.activeUserIndex) * 375 + windowWidth / 2 - 375 / 2}px`
+          const indexDiff=this.activeUserIndex-this.index
+          let space = windowWidth/2 - (302)*1.25/2- (302+30+39)*(indexDiff)
+          if (indexDiff===1) space-=19
+          if (indexDiff===-1) space+=19
+          return `${space}px`
         },
         isRepoReadmeLoaded(){
           if (!this.$store.state.repoReadmeData.find(v=>v.id===this.data.id)) return false
@@ -136,12 +140,11 @@ export default {
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  overflow: visible;
-
-
+  /*overflow: visible;*/
 }
 
 .slider {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -150,6 +153,10 @@ export default {
   border-radius: 6.45277px;
   width: 302px;
   height: 538px;
+  margin-top: 0px;
+  justify-content: flex-start;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
 .button-follow {
@@ -193,16 +200,17 @@ export default {
 
 .active-slide {
   transform: scale(1.25);
-  top: 212px;
-  position: absolute;
+  position: relative;
+  /*position: absolute;*/
   /*left: 50%;*/
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.051) 100%);
   z-index: 10000;
+  justify-self: center;
 }
 
 .inactive-slide {
-  top: 277px;
-  position: absolute;
+  position: relative;
+  /*position: absolute;*/
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.051) 100%);
   opacity: 0.3;
 
@@ -232,5 +240,22 @@ export default {
 .divider {
   height: 0.81px;
   background: #CACACA;
+}
+.col-slider-active{
+  top: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.col-slider-inactive{
+  top: 0px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 </style>

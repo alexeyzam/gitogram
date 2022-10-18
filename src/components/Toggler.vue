@@ -42,10 +42,10 @@ export default {
   display: inline-block;
   width: fit-content;
 }
-.issue-button:hover {
-  background-color: lightgrey;
-  cursor: pointer;
-}
+/*.issue-button:hover {*/
+/*  background-color: lightgrey;*/
+/*  cursor: pointer;*/
+/*}*/
 svg{
   position: relative;
   top: 4px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="header" :style="{height: `${height}px`}">
+  <div class="header-appbar" :style="{height: `${height}px`}">
     <Logo name="Gitogram" class="menu-logo"></Logo>
     <div class="action-menu">
       <svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg" class="menu-items">
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style scoped>
-.header {
+.header-appbar {
   display: flex;
   justify-content: space-between;
   background: #FAFAFA;

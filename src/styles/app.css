@@ -3,9 +3,13 @@
     flex-flow: wrap column;
 }
 .stories {
+    margin-top: 33px;
+    margin-bottom: 33px;
+    align-items: flex-start;
+    justify-content: center;
     display: flex;
-    justify-content: space-between;
-    padding-top: 44px;
-    background: #FAFAFA;
-    flex-wrap: wrap;
+    flex-flow: wrap row;
+    background-color: #FAFAFA;
+    padding: 0px;
+    gap: 31px;
 }
