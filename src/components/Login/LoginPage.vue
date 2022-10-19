@@ -27,6 +27,7 @@ import {mapActions, mapState} from "vuex";
 import {makeRequest} from "@/api/request";
 import {urlPaths} from "@/api/urls";
 import {simpleRequest} from "@/api/rest/simpleRestQuery";
+import router from "@/router";
 export default {
   name: "LoginPage",
   components: {Logo,ButtonAuth},
@@ -55,7 +56,7 @@ export default {
       window.location.href = `${githubAuthApi}?${params}`;
     }
   },
-  async created() {
+  async mounted() {
     const code = new URLSearchParams(window.location.search).get("code");
     if (!code){return}
     try{
@@ -68,6 +69,7 @@ export default {
       const token=response?.data?.token
       if (token) localStorage.setItem("token", token);
       await this.dispatchGetUser()
+      await router.push({name:'home'})
     }catch (error){
       console.error(error)
 
