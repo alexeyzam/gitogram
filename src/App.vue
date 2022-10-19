@@ -1,7 +1,8 @@
 <template>
   <div class="container" >
-   <router-view v-if="isLoggedIn"/>
-    <LoginPage v-else/>
+    <router-view></router-view>
+<!--   <router-view v-if="isLoggedIn"/>-->
+<!--    <LoginPage v-if="isLoggedIn===false"/>-->
   </div>
 
 
@@ -14,12 +15,14 @@ import LoginPage from "@/components/Login/LoginPage";
 export default {
   name: 'App',
   components: {LoginPage},
-  computed: {
-    ...mapState({
-      isLoggedIn: state=>state.user.isLoggedIn
-    })
-  },
-
+  // computed: {
+  //   ...mapState({
+  //     isLoggedIn: state=>state.user.isLoggedIn
+  //   })
+  // },
+  async created() {
+    await this.$store.dispatch('user/dispatchGetUser')
+  }
 }
 </script>
 

@@ -23,7 +23,10 @@
 <script>
 import Logo from "@/components/Logo";
 import ButtonAuth from "@/components/Login/ButtonAuth";
-import {mapActions} from "vuex";
+import {mapActions, mapState} from "vuex";
+import {makeRequest} from "@/api/request";
+import {urlPaths} from "@/api/urls";
+import {simpleRequest} from "@/api/rest/simpleRestQuery";
 export default {
   name: "LoginPage",
   components: {Logo,ButtonAuth},
@@ -34,18 +37,42 @@ export default {
       bottomText:'© Gitogram from Loftschool'
     }
   },
+  computed: {
+    ...mapState({
+      isLoggedIn: state=>state.user.isLoggedIn
+    })
+  },
   methods:{
     ...mapActions({
-      dispatchStartUserAuth:'user/dispatchStartUserAuth'
+      dispatchStartUserAuth:'user/dispatchStartUserAuth',
+      dispatchGetUser:'user/dispatchGetUser',
     }),
     handlerStartLogin(){
       const params = new URLSearchParams();
       params.append('client_id', process.env.VUE_APP_CLIENT_ID);
-      params.append('scope', 'repo:status read:user');
+      params.append('scope', 'repo:status public_repo read:user');
       const githubAuthApi = "https://github.com/login/oauth/authorize";
       window.location.href = `${githubAuthApi}?${params}`;
     }
   },
+  async created() {
+    const code = new URLSearchParams(window.location.search).get("code");
+    if (!code){return}
+    try{
+      const params = new URLSearchParams()
+      params.set('clientId',process.env.VUE_APP_CLIENT_ID)
+      params.set('clientSecret',process.env.VUE_APP_CLIENT_SECRET)
+      params.set('code',code)
+      const url= `${urlPaths.getToken}?${params}`
+      const response=await  simpleRequest({url,method:'post'})
+      const token=response?.data?.token
+      if (token) localStorage.setItem("token", token);
+      await this.dispatchGetUser()
+    }catch (error){
+      console.error(error)
+
+    }
+  }
 
 }
 </script>

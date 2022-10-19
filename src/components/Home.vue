@@ -65,7 +65,8 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch('fetchTrends')
+    // await this.$store.dispatch('fetchTrends')
+    await this.$store.dispatch('fetchStarredRepo')
     this.loadStories()
   },
 }

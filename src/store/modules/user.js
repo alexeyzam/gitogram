@@ -9,6 +9,7 @@ export default {
         userAuthFailing: null,
         authErrors:null,
         data: null,
+        token:null,
     },
     mutations: {
         startUserAuth(state) {
@@ -26,6 +27,7 @@ export default {
             state.userAuthFailing = false
             state.authErrors=payload
             state.data=null
+            state.token=null
         },
         successUserAuth(state,payload){
             state.isLoggedIn = true
@@ -34,18 +36,30 @@ export default {
             state.userAuthFailing = false
             state.authErrors=null
             state.data=payload
-        }
+        },
+        userLogOut(state){
+            state.isLoggedIn = false
+            state.userAuthStarting = true
+            state.userAuthSuccess = null
+            state.userAuthFailing = null
+            state.authErrors=null
+            state.data=null
+        },
     },
     actions:{
-        async dispatchStartUserAuth(state){
+        async dispatchGetUser(state){
             state.commit('startUserAuth')
             try{
-                const url='https://api.github.com/user'
-                const response = await makeRequest({})
+                const url='user'
+                const response = await makeRequest({url,method:'get'})
+                state.commit('successUserAuth',response.data)
 
             }catch (error){
                 state.commit('failedUserAuth',error)
             }
+        },
+        async dispatchStartUserAuth(state){
+
         },
 
     }
