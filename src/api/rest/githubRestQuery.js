@@ -22,8 +22,11 @@ export const getTrendigs = (
 }
 
 export const getUserStarredRepo = () => {
+    const params = new URLSearchParams()
+    params.set('per_page', '10')
     return makeRequest({
-        url: urlPaths.getStarredRepo
+
+        url: `${urlPaths.getStarredRepo}?${params}`
     })
 }
 export const checkIsUserStarredThisRepo = (owner,repo) => {
