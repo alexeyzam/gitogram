@@ -100,6 +100,8 @@ export default {
   flex-direction: row;
 }
 .content-col{
+  display: flex;
+  flex-direction: column;
   flex-basis: 979px;
   justify-content: center;
 }

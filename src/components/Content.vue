@@ -9,15 +9,23 @@
     </div>
 
     <slot name="postFrame"></slot>
+    <div class="issue-block">
     <Toggler v-model="isViewIssue"/>
+      <template v-if="isViewIssue">
 
-    <template v-if="isViewIssue && issues">
+    <template v-if="!issueLoading">
       <div class="issue-comment" v-for="issue in issues">
-
         <div class="issue-autor"><span>{{ issue.user.login }}</span></div>
-        <div class="issue-title"><span>{{issue.body}}</span></div>
+        <div class="issue-title"><span v-html="issue.body"/></div>
       </div>
     </template>
+      <template v-else>
+        <div class="issue-preloader-block-1" />
+        <div class="issue-preloader-block-2" />
+        <div class="issue-preloader-block-3" />
+      </template>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -38,6 +46,8 @@ export default {
   data() {
     return {
       isViewIssue: false,
+      issueLoading:false
+
 
     }
   },
@@ -46,19 +56,23 @@ export default {
       const repoData=this.$store.state.repos.find(v=>v.id===this.user.id)
       const issuesRepo=repoData?.issues
       return issuesRepo?issuesRepo:[]
-    }
+    },
   },
   methods:{
     async getIssues(){
+      this.issueLoading=true
       const repoData=this.$store.state.repos.find(v=>v.id===this.user.id)
-      if (repoData?.issues){return repoData.issues}
+      if (repoData?.issues){
+        this.issueLoading=false
+        return repoData.issues
+      }
       if (this.user?.issues_url){
       const data=await apiGet({basUrl:this.user.issues_url})
-        this.issues=data.data
         repoData.issues=data.data
       }else {
         repoData.issues=[]
       }
+      this.issueLoading=false
 
     }
   },
@@ -124,6 +138,39 @@ export default {
   display: flex;
   margin: 2px;
 
+}
+.issue-block{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 10px;
+
+  width: 504px;
+  height: 100%;
+}
+.issue-preloader-block-1{
+
+  width: 504px;
+  height: 22px;
+
+  background: linear-gradient(270deg, #FFFFFF -50%, rgba(255, 255, 255, 0) 100%), #EAEAEA;
+  border-radius: 4px;
+}
+.issue-preloader-block-2{
+  width: 298px;
+  height: 22px;
+
+  background: linear-gradient(270deg, #FFFFFF -50%, rgba(255, 255, 255, 0) 100%), #EAEAEA;
+  border-radius: 4px;
+}
+
+.issue-preloader-block-3{
+  width: 216px;
+  height: 22px;
+
+  background: linear-gradient(270deg, #FFFFFF -50%, rgba(255, 255, 255, 0) 100%), #EAEAEA;
+  border-radius: 4px;
 }
 
 </style>
