@@ -38,23 +38,28 @@ export default {
   data() {
     return {
       isViewIssue: false,
-      issues:[],
-    }
-  },
-  methods:{
-    async getIssues(){
-      if (this.user?.issues_url){
-      const data=await apiGet({basUrl:this.user.issues_url})
-        this.issues=data.data
-      }else {
-        this.issues=[]
-      }
 
     }
   },
   computed:{
-    userImage(){
-      return require.context('../assets/images', false, /\.jpg$/)('./'+'Josh.jpg')
+    issues(){
+      const repoData=this.$store.state.repos.find(v=>v.id===this.user.id)
+      const issuesRepo=repoData?.issues
+      return issuesRepo?issuesRepo:[]
+    }
+  },
+  methods:{
+    async getIssues(){
+      const repoData=this.$store.state.repos.find(v=>v.id===this.user.id)
+      if (repoData?.issues){return repoData.issues}
+      if (this.user?.issues_url){
+      const data=await apiGet({basUrl:this.user.issues_url})
+        this.issues=data.data
+        repoData.issues=data.data
+      }else {
+        repoData.issues=[]
+      }
+
     }
   },
   watch:{

@@ -15,14 +15,6 @@ import LoginPage from "@/components/Login/LoginPage";
 export default {
   name: 'App',
   components: {LoginPage},
-  // computed: {
-  //   ...mapState({
-  //     isLoggedIn: state=>state.user.isLoggedIn
-  //   })
-  // },
-  // async created() {
-  //   await this.$store.dispatch('user/dispatchGetUser')
-  // }
 }
 </script>
 
