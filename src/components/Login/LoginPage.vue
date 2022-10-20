@@ -69,7 +69,7 @@ export default {
       const token=response?.data?.token
       if (token) localStorage.setItem("token", token);
       await this.dispatchGetUser()
-      await router.push({name:'home'})
+      window.location.href='/'
     }catch (error){
       console.error(error)
 

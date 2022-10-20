@@ -1,4 +1,5 @@
 import {makeRequest} from "@/api/request";
+import router from "@/router";
 
 export default {
     namespaced: true,
@@ -44,6 +45,7 @@ export default {
             state.userAuthFailing = null
             state.authErrors=null
             state.data=null
+
         },
     },
     actions:{
@@ -61,6 +63,13 @@ export default {
         async dispatchStartUserAuth(state){
 
         },
+        async dispatchUserLogout(state){
+            localStorage.removeItem('token')
+            await router.push({name:'login'})
+            state.commit('userLogOut')
+
+
+        }
 
     }
 }

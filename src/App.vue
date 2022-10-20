@@ -20,9 +20,9 @@ export default {
   //     isLoggedIn: state=>state.user.isLoggedIn
   //   })
   // },
-  async created() {
-    await this.$store.dispatch('user/dispatchGetUser')
-  }
+  // async created() {
+  //   await this.$store.dispatch('user/dispatchGetUser')
+  // }
 }
 </script>
 

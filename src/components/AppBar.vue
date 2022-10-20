@@ -39,11 +39,12 @@ export default {
   },
   computed: {
     ...mapState({
-      userImage: state=>state.user.data.avatar_url
+      userImage: state=>state.user?.data?.avatar_url
     })
   },
   methods: {
     handlerLogout() {
+      this.$store.dispatch('user/dispatchUserLogout')
     }
   }
 }

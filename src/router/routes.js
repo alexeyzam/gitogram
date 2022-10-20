@@ -2,11 +2,7 @@ import Sliders from "@/components/Sliders";
 import Home from "@/components/Home";
 import LoginPage from "@/components/Login/LoginPage";
 export default [
-    {
-        path: "/",
-        name:'home',
-        component:Home,
-    },
+
     {
         path: "/stories",
         name:'stories',
@@ -16,5 +12,10 @@ export default [
         path: "/login",
         name:'login',
         component: LoginPage,
-    }
+    },
+    {
+        path: "/",
+        name:'home',
+        component:Home,
+    },
 ]
