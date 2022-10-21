@@ -14,7 +14,6 @@
         </div>
         <div class="profile">
           <Profile :src="data.img" :username="data.username"></Profile>
-          {{index}}
         </div>
       </div>
       <div class="divider"/>
@@ -28,7 +27,7 @@
       </div>
       <div class="divider"></div>
       <div class="button-follow">
-        <x-button text="Follow"></x-button>
+        <x-button :text="textLikeButton" @click="handlerStarredRepo(textLikeButton)"></x-button>
       </div>
 
     </div>
@@ -46,6 +45,7 @@ import ButtonLeft from "@/components/ButtonLeft";
 import ButtonRight from "@/components/ButtonRight";
 import {mapGetters, mapActions} from "vuex";
 import Skeletons from "@/components/Skeletons";
+import {checkIsUserStarredThisRepo, setStarredThisRepo, setUnstarredThisRepos} from "@/api/rest/githubRestQuery";
 
 export default {
   name: "Slider",
@@ -59,6 +59,7 @@ export default {
       progressReset: false,
       username: 'Josh',
       loading: false,
+      textLikeButton:'Follow',
     }
   },
       computed: {
@@ -95,7 +96,7 @@ export default {
         isRepoReadmeLoaded(){
           if (!this.$store.state.repoReadmeData.find(v=>v.id===this.data.id)) return false
           return true
-        }
+        },
       },
       methods: {
         ...mapActions({'fetchReadme': 'fetchReadme'}),
@@ -116,19 +117,43 @@ export default {
             }
           })
         },
+        async checkRepoStarred(){
+          try {
+            const response=await checkIsUserStarredThisRepo(this.data.username,this.data.name)
+            if (response.status===204) this.textLikeButton='Unfollow'
+
+          }catch (error){
+            if (error.response.status==404){this.textLikeButton='Follow'}
+            else {console.error(error)}
+          }
+        },
         async loadReadme() {
           if (this.isSlideActive && this.getRepoReadme(this.data) === undefined) {
             this.loading = true
             await this.fetchReadme(this.data)
             this.loading = false
           }
+        },
+        async handlerStarredRepo(action){
+          if (action==='Unfollow'){
+            await setUnstarredThisRepos(this.data.username,this.data.name)
+            await this.checkRepoStarred()
+          }
+          if (action==='Follow'){
+            await setStarredThisRepo(this.data.username,this.data.name)
+            await this.checkRepoStarred()
+          }
         }
       },
   async mounted() {
+    await this.checkRepoStarred()
     await this.loadReadme()
+
   },
   async updated() {
+    // await this.checkRepoStarred()
       await this.loadReadme()
+
   }
 
 }

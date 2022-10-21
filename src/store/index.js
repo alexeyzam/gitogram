@@ -1,7 +1,11 @@
 import {createStore} from 'vuex';
-import {getRepoReadme, getTrendigs} from "@/api/rest/githubRestQuery";
+import {getRepoReadme, getTrendigs, getUserStarredRepo} from "@/api/rest/githubRestQuery";
+import user from './modules/user'
 
 export default createStore({
+    modules:{
+        user
+    },
     state:{
         repos:[],
         repoReadmeData:[],
@@ -64,6 +68,17 @@ export default createStore({
                 console.error(error)
                 state.commit('failLoadingData',{error})
             }
+
+        },
+        async fetchStarredRepo(state){
+            state.commit('startLoadingData')
+          try {
+              const response= await getUserStarredRepo()
+              state.commit('successLoadingData',{repos:response?.data})
+          }catch(error){
+              console.error(error)
+              state.commit('failLoadingData',{error})
+          }
 
         },
         async fetchReadme(state,payload){

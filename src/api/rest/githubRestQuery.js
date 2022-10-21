@@ -21,6 +21,35 @@ export const getTrendigs = (
     })
 }
 
+export const getUserStarredRepo = () => {
+    const params = new URLSearchParams()
+    params.set('per_page', '10')
+    return makeRequest({
+
+        url: `${urlPaths.getStarredRepo}?${params}`
+    })
+}
+export const checkIsUserStarredThisRepo = (owner,repo) => {
+    return makeRequest({
+        url: `${urlPaths.getStarredRepo}\/${owner}\/${repo}`
+    })
+}
+
+export const setStarredThisRepo = (owner,repo) => {
+    return makeRequest({
+        url: `${urlPaths.getStarredRepo}\/${owner}\/${repo}`,
+        method:'put'
+    })
+}
+
+export const setUnstarredThisRepos = (owner,repo) => {
+    return makeRequest({
+        url: urlPaths.getStarredRepo+'/'+owner+'/'+repo,
+        method:'delete',
+        headers:{accept:'application/vnd.github+json'}
+    })
+}
+
 export const apiGet=({basUrl,params:params={}})=>{
     const queryParams=new URLSearchParams()
     Object.entries(params).forEach(([key,value])=>{

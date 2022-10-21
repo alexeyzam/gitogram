@@ -65,7 +65,8 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch('fetchTrends')
+    // await this.$store.dispatch('fetchTrends')
+    await this.$store.dispatch('fetchStarredRepo')
     this.loadStories()
   },
 }
@@ -99,6 +100,8 @@ export default {
   flex-direction: row;
 }
 .content-col{
+  display: flex;
+  flex-direction: column;
   flex-basis: 979px;
   justify-content: center;
 }
