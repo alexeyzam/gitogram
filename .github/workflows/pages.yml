@@ -29,6 +29,14 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v2
+      - name: add env
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        run: |
+          sed -i "s/__CLIENT_ID__/$CLIENT_ID/" ./vue.config.js
+          sed -i "s/__CLIENT_SECRET__/$CLIENT_SECRET/" ./vue.config.js
+        shell: bash
       - name: npm install and build
         run: |
           npm install
