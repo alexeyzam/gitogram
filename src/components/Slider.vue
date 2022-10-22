@@ -64,30 +64,30 @@ export default {
   },
       computed: {
         ...mapGetters({
-          'users': 'getUsers',
+          'repos': 'getRecommendedReposData',
           'getRepoReadme':'getRepoReadme',
         }),
-        activeUserId() {
+        activeRepoId() {
           return this.$route?.query?.id
         },
-        activeUserIndex() {
-          return this.users.findIndex(v => v.id.toString() === this.activeUserId)
+        activeRepoIndex() {
+          return this.repos.findIndex(v => v.id.toString() === this.activeRepoId)
         },
         isSlideActive() {
-          return this.activeUserId === this.data.id.toString()
+          return this.activeRepoId === this.data.id.toString()
         },
         isVisibleLeftButton() {
           if (this.index === 0) return false
-          return this.activeUserId === this.data.id.toString()
+          return this.activeRepoId === this.data.id.toString()
         },
         isVisibleRightButton() {
           if (this.index === 9) return false
-          return this.activeUserId === this.data.id.toString()
+          return this.activeRepoId === this.data.id.toString()
         },
         leftPosition() {
           // const windowWidth=window.innerWidth
           const windowWidth = 1440
-          const indexDiff=this.activeUserIndex-this.index
+          const indexDiff=this.activeRepoIndex-this.index
           let space = windowWidth/2 - (302)*1.25/2- (302+30+39)*(indexDiff)
           if (indexDiff===1) space-=19
           if (indexDiff===-1) space+=19
@@ -99,12 +99,17 @@ export default {
         },
       },
       methods: {
-        ...mapActions({'fetchReadme': 'fetchReadme'}),
+        ...mapActions(
+            {
+              'fetchReadme': 'fetchReadme',
+              'fetchLikedRepo':'fetchLikedRepo',
+            }
+        ),
         handlerRightButton() {
           this.$router.push({
             name: this.$route.name,
             query: {
-              id: this.users[this.index + 1].id
+              id: this.repos[this.index + 1].id
             }
           })
         },
@@ -113,7 +118,7 @@ export default {
           this.$router.push({
             name: this.$route.name,
             query: {
-              id: this.users[this.index - 1].id
+              id: this.repos[this.index - 1].id
             }
           })
         },
@@ -123,8 +128,7 @@ export default {
             if (response.status===204) this.textLikeButton='Unfollow'
 
           }catch (error){
-            if (error.response.status==404){this.textLikeButton='Follow'}
-            else {console.error(error)}
+            if (error.response.status===404) this.textLikeButton='Follow'
           }
         },
         async loadReadme() {
@@ -134,14 +138,21 @@ export default {
             this.loading = false
           }
         },
+        reloadData(){
+          let promises = [
+            this.checkRepoStarred(),
+            // this.fetchStarredRepo(),
+          ]
+          return Promise.all(promises)
+        },
         async handlerStarredRepo(action){
           if (action==='Unfollow'){
             await setUnstarredThisRepos(this.data.username,this.data.name)
-            await this.checkRepoStarred()
+            await this.reloadData()
           }
           if (action==='Follow'){
             await setStarredThisRepo(this.data.username,this.data.name)
-            await this.checkRepoStarred()
+            await this.reloadData()
           }
         }
       },

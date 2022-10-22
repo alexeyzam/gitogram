@@ -1,31 +1,26 @@
 import {createStore} from 'vuex';
-import {getRepoReadme, getTrendigs, getUserStarredRepo} from "@/api/rest/githubRestQuery";
+import {getRepoReadme, getRecommendedRepo, getUserLikedRepo} from "@/api/rest/githubRestQuery";
 import user from './modules/user'
-
+import {getReposData} from "@/helpers/storeFunctions";
 export default createStore({
     modules:{
         user
     },
     state:{
-        repos:[],
+        likedRepos:[],
         repoReadmeData:[],
         loading:false,
         error:null,
+        loadingRecommendRepo:false,
+        errorRecommendRepo:null,
+        recommendedRepoData:[]
     },
     getters: {
-        getUsers(state) {
-            return state.repos.map(v => {
-                return {
-                    id:v.id,
-                    username: v.owner.login,
-                    img: v.owner.avatar_url,
-                    name: v.name,
-                    description: v.description,
-                    issues_url: v.issues_url.replace('{/number}', ''),
-                    stars: v.stargazers_count,
-                    forks: v.forks
-                }
-            })
+        getLikedRepoData(state){
+          return   getReposData(state,{fromRepo:'liked'})
+        },
+        getRecommendedReposData(state, {fromRepo}) {
+            return   getReposData(state,{fromRepo:'recommended'})
         },
 
         getRepoReadme(state){
@@ -35,20 +30,35 @@ export default createStore({
         },
     },
     mutations:{
-        startLoadingData(state){
+        startLoadingLikedRepo(state){
             state.loading=true
-            state.repos=[]
+            state.likedRepos=[]
             state.error=null
         },
-        successLoadingData(state,payload){
+        successLoadedLikedRepo(state,payload){
             state.loading=false
-            state.repos=payload.repos
+            state.likedRepos=payload.repos
             state.error=false
         },
-        failLoadingData(state,payload){
+        failedLoadLikedRepo(state,payload){
             state.loading=false
-            state.repos=[]
+            state.likedRepos=[]
             state.error=payload.error
+        },
+        startLoadingRecommendedRepoData(state){
+            state.loadingRecommendRepo=true
+            state.recommendedRepoData=[]
+            state.error=null
+        },
+        successLoadRecommendedRepoData(state,payload){
+            state.loadingRecommendRepo=false
+            state.recommendedRepoData=payload.repos
+            state.errorRecommendRepo=false
+        },
+        failedLoadRecommendedRepoData(state,payload){
+            state.loadingRecommendRepo=false
+            state.recommendedRepoData=[]
+            state.errorRecommendRepo=payload.error
         },
         successLoadReadmeData(state,payload){
             const index = state.repoReadmeData.findIndex(v=>v.id===payload.id)
@@ -59,25 +69,26 @@ export default createStore({
 
     },
     actions:{
-        async fetchTrends(state){
-            state.commit('startLoadingData')
+        async fetchRecommendedRepo(state){
+            state.commit('startLoadingRecommendedRepoData')
             try{
-                const response= await getTrendigs({lang:'react'})
-                state.commit('successLoadingData',{repos:response?.data?.items})
+                const response= await getRecommendedRepo({lang:'react'})
+                state.commit('successLoadRecommendedRepoData',{repos:response?.data?.items||[]})
             }catch (error){
                 console.error(error)
-                state.commit('failLoadingData',{error})
+                state.commit('failedLoadRecommendedRepoData',{error})
             }
 
         },
-        async fetchStarredRepo(state){
-            state.commit('startLoadingData')
+        async fetchLikedRepo(state){
+            state.commit('startLoadingLikedRepo')
           try {
-              const response= await getUserStarredRepo()
-              state.commit('successLoadingData',{repos:response?.data})
+              const response= await getUserLikedRepo()
+              state.commit('successLoadedLikedRepo',{repos:response?.data||[]})
           }catch(error){
               console.error(error)
-              state.commit('failLoadingData',{error})
+
+              state.commit('failedLoadLikedRepo',{error})
           }
 
         },

@@ -2,8 +2,8 @@
   <div class="content-wrapper">
     <div class="content-top">
       <Profile
-          :src="user.img"
-          :username="user.username"
+          :src="repo.img"
+          :username="repo.username"
           class="items"
       />
     </div>
@@ -38,7 +38,7 @@ export default {
   name: "Content",
   components: {Toggler,Profile},
   props:{
-    user:{
+    repo:{
       default:{},
       required:true,
     }
@@ -53,7 +53,7 @@ export default {
   },
   computed:{
     issues(){
-      const repoData=this.$store.state.repos.find(v=>v.id===this.user.id)
+      const repoData=this.$store.state.likedRepos.find(v=>v.id===this.repo.id)
       const issuesRepo=repoData?.issues
       return issuesRepo?issuesRepo:[]
     },
@@ -61,13 +61,13 @@ export default {
   methods:{
     async getIssues(){
       this.issueLoading=true
-      const repoData=this.$store.state.repos.find(v=>v.id===this.user.id)
+      const repoData=this.$store.state.likedRepos.find(v=>v.id===this.repo.id)
       if (repoData?.issues){
         this.issueLoading=false
         return repoData.issues
       }
-      if (this.user?.issues_url){
-      const data=await apiGet({basUrl:this.user.issues_url})
+      if (this.repo?.issues_url){
+      const data=await apiGet({basUrl:this.repo.issues_url})
         repoData.issues=data.data
       }else {
         repoData.issues=[]

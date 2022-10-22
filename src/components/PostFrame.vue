@@ -1,13 +1,13 @@
 <template>
   <div class="post-frame-container">
-    <h1 class="post-frame-header">{{user.name}}</h1>
-    <p>{{user.description}}</p>
+    <h1 class="post-frame-header">{{ repo.name }}</h1>
+    <p>{{ repo.description }}</p>
 
     <div class="post-buttons">
       <BtnWithCount
           text="Star"
           position="first"
-          :count="user.stars.toString()"
+          :count="repo.stars.toString()"
           @click="handlerUpdateLikeRepo"
       >
         <template v-slot:icon>
@@ -21,7 +21,7 @@
       <BtnWithCount
           text="Fork"
           position="second"
-          :count="user.forks.toString()"
+          :count="repo.forks.toString()"
       >
         <template v-slot:icon>
           <svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,13 +38,14 @@
 
 <script>
 import BtnWithCount from "@/components/BtnWithCount";
+// import {mapActions} from "vuex";
 import {checkIsUserStarredThisRepo, setStarredThisRepo, setUnstarredThisRepos} from "@/api/rest/githubRestQuery";
 
 export default {
   name: "Description",
   components: {BtnWithCount},
   props:{
-    user:{
+    repo:{
       default:{},
       required:true,
     }
@@ -55,9 +56,12 @@ export default {
     }
   },
   methods:{
+    // ...mapActions({
+    //       'fetchLikedRepo':'fetchLikedRepo',
+    //                }),
     async checkRepoStarred(){
       try {
-        const response=await checkIsUserStarredThisRepo(this.user.username,this.user.name)
+        const response=await checkIsUserStarredThisRepo(this.repo.username,this.repo.name)
         if (response.status===204) this.repoLiked=true
 
       }catch (error){
@@ -66,13 +70,12 @@ export default {
       }
     },
     async handlerUpdateLikeRepo(){
-      console.log('handlerUpdateLikeRepo')
       if (this.repoLiked===true){
-        await setUnstarredThisRepos(this.user.username,this.user.name)
+        await setUnstarredThisRepos(this.repo.username,this.repo.name)
         await this.checkRepoStarred()
       }
       else {
-        await setStarredThisRepo(this.user.username,this.user.name)
+        await setStarredThisRepo(this.repo.username,this.repo.name)
         await this.checkRepoStarred()
       }
     }

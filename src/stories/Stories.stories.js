@@ -14,7 +14,7 @@ const Template = (args) => ({
     },
     template: `
       <div class="stories">
-      <Stories :users="users"></Stories>
+      <Stories :repos="users"></Stories>
       </div>
     `,
 
@@ -23,7 +23,7 @@ const Template = (args) => ({
 
 export const TemplateBinded = Template.bind({})
 TemplateBinded.args = {
-    users: [
+    repos: [
         {
             stars: 10,
             forks: 300,
