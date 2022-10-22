@@ -1,7 +1,7 @@
 import {makeRequest} from "@/api/request";
 import {urlPaths} from "@/api/urls";
 
-export const getTrendigs = (
+export const getRecommendedRepo = (
     {
         lang :lang='javascript',
         order :order = 'desc',
@@ -21,7 +21,7 @@ export const getTrendigs = (
     })
 }
 
-export const getUserStarredRepo = () => {
+export const getUserLikedRepo = () => {
     const params = new URLSearchParams()
     params.set('per_page', '10')
     return makeRequest({

@@ -10,17 +10,17 @@
 
       <template v-slot:middle>
         <div class="stories">
-          <Stories :users="users"/>
+          <Stories :repos="recommendedRepo"/>
         </div>
       </template>
     </Header>
     </div>
     <div class="content-row">
       <div class="content-col">
-      <div v-for="user in users" class="content">
-        <Content :user="user">
+      <div v-for="repo in likedRepo" class="content">
+        <Content :repo="repo">
           <template v-slot:postFrame>
-              <PostFrame :user="user"/>
+              <PostFrame :repo="repo"/>
           </template>
         </Content>
       </div>
@@ -46,28 +46,35 @@ export default {
     Header,
     PostFrame,
   },
-  data(){
-    return {
-      users:[],
-    }
-  },
+  // data(){
+  //   return {
+  //     users:[],
+  //   }
+  // },
   computed:{
     ...mapGetters({
-                 'getUsers':'getUsers'
-               })
+                  'getLikedRepoData':'getLikedRepoData',
+                  'getRecommendedReposData':'getRecommendedReposData',
+               }),
+    recommendedRepo(){
+      return this.getRecommendedReposData
+    },
+    likedRepo(){
+      return this.getLikedRepoData
+    }
   },
   methods:{
     ...mapActions({
-      'fetchTrends':'fetchTrends'
+      'fetchRecommendedRepo':'fetchRecommendedRepo',
+      'fetchLikedRepo':'fetchLikedRepo',
     }),
-    loadStories(){
-        this.users=this.getUsers
-    }
   },
   async mounted() {
-    // await this.$store.dispatch('fetchTrends')
-    await this.$store.dispatch('fetchStarredRepo')
-    this.loadStories()
+    let promises = [
+      this.fetchRecommendedRepo(),
+      this.fetchLikedRepo(),
+    ]
+    await Promise.all(promises)
   },
 }
 </script>

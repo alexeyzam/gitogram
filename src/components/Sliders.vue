@@ -5,7 +5,7 @@
       <CloseButton @click="handlerCloseButton"/>
     </div>
     <div class="row">
-      <Slider v-for="(user,index) in users" :data="user" :index="index" :key="user.id"/>
+      <Slider v-for="(repo,index) in repos" :data="repo" :index="index" :key="repo.id"/>
     </div>
   </div>
 
@@ -20,13 +20,13 @@ export default {
   name: "Sliders",
   components: {Slider,Logo,CloseButton},
   computed:{
-    ...mapGetters({'getUsers':'getUsers'}),
-    users(){
-        return this.getUsers
+    ...mapGetters({'getRecommendedReposData':'getRecommendedReposData'}),
+    repos(){
+        return this.getRecommendedReposData
     }
   },
   methods:{
-    ...mapActions({'fetchTrends':'fetchTrends'}),
+    ...mapActions({'fetchRecommendedRepo':'fetchRecommendedRepo'}),
     handlerCloseButton(){
       this.$router.push({
         'name':'home',
@@ -34,8 +34,8 @@ export default {
     }
   },
   async created(){
-    if(this.getUsers.length===0) {
-      await this.fetchTrends()}
+    if(this.repos.length===0) {
+      await this.fetchRecommendedRepo()}
   }
 
 }

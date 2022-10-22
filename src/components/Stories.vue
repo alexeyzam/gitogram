@@ -2,16 +2,16 @@
 
 
     <div
-        v-for="user in users"
-        :key="user.username"
+        v-for="repo in repos"
+        :key="repo.username"
         class="user-item"
-        @click="handlerUserSelected(user)"
+        @click="handlerRepoSelected(repo)"
     >
       <div class="user-image">
-      <img :src="user.img" :alt="user.name" >
+      <img :src="repo.img" :alt="repo.name" >
       </div>
 
-      <span class="story-username" >{{user.name}}</span>
+      <span class="story-username" >{{repo.name}}</span>
 
     </div>
 
@@ -25,17 +25,17 @@
 export default {
   name: "Stories",
   props:{
-    users:{
+    repos:{
       default:[],
     }
   },
   methods:{
-    handlerUserSelected(user){
-      this.$emit('user-selected',user)
+    handlerRepoSelected(repo){
+      this.$emit('repo-selected',repo)
       this.$router.push({
         name:'stories',
         query:{
-          id:user.id
+          id:repo.id
         }
       })
     }
