@@ -5,11 +5,13 @@ export const makeRequest = (
         url,
         method = 'get',
         data = {},
-        headers = {}
+        headers = {},
+        ...userArguments
     }
 ) => axios({
     url,
     method,
     data,
-    headers
+    headers,
+    userArguments,
 })
