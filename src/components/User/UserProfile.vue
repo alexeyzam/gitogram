@@ -54,51 +54,46 @@
 <script>
 import AppBar from "@/components/AppBar";
 import UserRepository from "@/components/User/UserRepository";
-import {mapActions, mapGetters, mapState} from "vuex";
+import {useStore} from "vuex";
+import {computed} from "vue";
+import {useRoute, useRouter} from 'vue-router'
+
 export default {
   name: "UserProfile",
+  setup() {
+    const {state,getters} = useStore()
+    const router = new useRouter()
+    const route = new useRoute()
+    const handlerUserFollowingClicked = async () => {
+
+      await router.push({name: 'user-following'})
+    }
+    return {
+      handlerUserFollowingClicked,
+      userImage: computed(()=>state.user?.userImage),
+      login: computed(()=>state.user?.data?.login),
+      username: computed(()=>state.user?.data?.name),
+      followers:computed(()=>state.user?.data?.followers),
+      numLikedRepo:computed(() => state.likedRepos.length),
+      repos: computed(()=>getters.userRepos.getUserRepo),
+      numUserRepos: computed(()=>state.userRepos.userOwnRepos.length),
+      pageData: computed(() => {
+        if (route?.name === 'user-own-repos') {
+          return {
+            dataTitle: 'Repositories',
+            dataCounter: computed(()=>state.userRepos.userOwnRepos.length),
+          }
+        } else if (route?.name === 'user-following') {
+          return {
+            dataTitle: 'Following',
+            dataCounter: computed(()=>state.likedRepos.length)
+          }
+        }
+      })
+
+    }
+  },
   components:{AppBar,UserRepository},
-  data(){
-    return{
-    }
-  },
-  computed:{
-    ...mapGetters({
-      repos: 'userRepos/getUserRepo',
-      numUserRepos:'userRepos/getNumUserRepo',
-    }),
-    ...mapState({
-      userImage: state=>state.user?.userImage,
-      login: state=>state.user?.data?.login,
-      username: state=>state.user?.data?.name,
-      followers:state=>state.user?.data?.followers ,
-      numLikedRepo:state => state.likedRepos.length
-    }),
-    pageData(){
-      if (this.$route?.name==='user-own-repos') {
-        return {
-          dataTitle: 'Repositories',
-          dataCounter: this.numUserRepos,
-
-        }
-      }
-      else if (this.$route?.name==='user-following') {
-        return {
-          dataTitle: 'Following',
-          dataCounter: this.numLikedRepo,
-        }
-      }
-
-      }
-    },
-  methods:{
-      ...mapActions({
-        dispatchLoadRepos:'userRepos/dispatchLoadRepos',
-      }),
-    async handlerUserFollowingClicked(){
-      await this.$router.push({name:'user-following'})
-    }
-  },
 }
 </script>
 
