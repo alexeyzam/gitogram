@@ -51,7 +51,7 @@ export default {
     handlerStartLogin(){
       const params = new URLSearchParams();
       params.append('client_id', process.env.VUE_APP_CLIENT_ID);
-      params.append('scope', 'repo:status public_repo read:user');
+      params.append('scope', 'repo:status public_repo read:user user:follow');
       const githubAuthApi = "https://github.com/login/oauth/authorize";
       window.location.href = `${githubAuthApi}?${params}`;
     }
