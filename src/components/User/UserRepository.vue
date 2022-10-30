@@ -7,14 +7,16 @@
 
 <script>
 import PostFrame from "@/components/PostFrame";
-import {mapState} from "vuex";
+import {useStore} from "vuex";
+import {computed} from "vue";
 export default {
   name: "UserRepository",
   components:{PostFrame},
-  computed:{
-    ...mapState({
-      username:state=>state.user?.data?.login
-    })
+  setup(){
+    const {state}=useStore()
+    return {
+      username: computed(()=>state.user?.data?.login)
+    }
   },
   props:{
     repo:{

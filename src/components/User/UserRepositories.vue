@@ -4,25 +4,19 @@
 
 <script>
 import UserRepository from "@/components/User/UserRepository";
-import {mapActions, mapGetters} from "vuex";
+import {useStore} from "vuex";
+import {computed} from "vue";
 
 export default {
   name: "UserRepositories",
   components:{UserRepository},
-  computed: {
-    ...mapGetters({
-      repos: 'userRepos/getUserRepo',
-    })
+  setup(){
+    const {getters,dispatch}= useStore()
+    dispatch('userRepos/dispatchLoadRepos')
+    return {
+      repos: computed(()=>getters['userRepos/getUserRepo'])
+    }
   },
-  methods:{
-    ...mapActions({
-      dispatchLoadRepos:'userRepos/dispatchLoadRepos',
-    })
-  },
-  async created() {
-    console.log('UserRepositories')
-    await this.dispatchLoadRepos()
-  }
 }
 </script>
 
