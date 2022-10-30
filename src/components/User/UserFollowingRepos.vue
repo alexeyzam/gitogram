@@ -5,26 +5,20 @@
 </template>
 
 <script>
-import {mapActions,mapGetters} from "vuex";
+import {mapActions,mapGetters,useStore} from "vuex";
 import UserFollowingRepo from "@/components/User/UserFollowingRepo";
+import {computed} from "vue";
 
 export default {
   name: "UserFollowing",
   components: {UserFollowingRepo},
-  computed:{
-    ...mapGetters({
-      repos:'getLikedRepoData',
-    }),
+  setup() {
+    const {state, getters, dispatch} = useStore()
+    dispatch('fetchLikedRepo')
+    return {
+      repos: computed(() => getters.getLikedRepoData),
+    }
   },
-  methods:{
-    ...mapActions({
-      'fetchLikedRepo':'fetchLikedRepo',
-    }),
-  },
-  async created() {
-    await this.fetchLikedRepo()
-  }
-
 }
 </script>
 
