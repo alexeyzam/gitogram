@@ -38,11 +38,11 @@ jobs:
           sed -i "s/__CLIENT_ID__/$CLIENT_ID/" ./vue.config.js
           sed -i "s/__CLIENT_SECRET__/$CLIENT_SECRET/" ./vue.config.js
         shell: bash
-      - name: npm install and build
+      - name: yarn install and build
         run: |
-          npm install
-          npm run build --if-present
-          npm run build-storybook
+          yarn install
+          yarn build --if-present
+          yarn build-storybook
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
