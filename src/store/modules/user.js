@@ -11,6 +11,7 @@ export default {
         authErrors:null,
         data: null,
         token:null,
+        userImage:null
     },
     mutations: {
         startUserAuth(state) {
@@ -47,6 +48,9 @@ export default {
             state.data=null
 
         },
+        setUserImage(state,image){
+            state.userImage=image
+        }
     },
     actions:{
         async dispatchGetUser(state){
@@ -55,7 +59,21 @@ export default {
                 const url='user'
                 const response = await makeRequest({url,method:'get'})
                 state.commit('successUserAuth',response.data)
-
+                const userImage=sessionStorage.getItem('userImage')
+                if (userImage){
+                    state.commit('setUserImage',userImage)
+                }else{
+                    const url = state?.state?.data?.avatar_url
+                    const imageResponse=await fetch(url)
+                    const imageBlob = await imageResponse.blob()
+                    const reader = new FileReader();
+                    await reader.readAsDataURL(imageBlob)
+                    reader.onload=function (){
+                        const userImage=reader.result
+                        state.commit('setUserImage',userImage)
+                        sessionStorage.setItem('userImage',userImage)
+                    }
+                }
             }catch (error){
                 state.commit('failedUserAuth',error)
             }

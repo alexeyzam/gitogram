@@ -1,13 +1,21 @@
 <template>
   <div class="header-appbar" :style="{height: `${height}px`}">
-    <Logo name="Gitogram" class="menu-logo"></Logo>
+    <Logo name="Gitogram" class="menu-logo" @click="handlerHomeClick"></Logo>
     <div class="action-menu">
-      <svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg" class="menu-items">
+      <svg
+          width="24"
+          height="26"
+          viewBox="0 0 24 26"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="menu-items"
+          @click="handlerHomeClick"
+      >
         <path
             d="M10.0692 1.06704C11.1853 0.128491 12.8147 0.128491 13.9308 1.06704L22.9308 8.63522C23.6087 9.20524 24 10.0456 24 10.9313V23.5C24 24.6046 23.1046 25.5 22 25.5H16.5C15.3954 25.5 14.5 24.6046 14.5 23.5V16.5H9.5V23.5C9.5 24.6046 8.60457 25.5 7.5 25.5H2C0.895431 25.5 0 24.6046 0 23.5V10.9313C0 10.0456 0.391346 9.20524 1.0692 8.63522L10.0692 1.06704Z"
             fill="#262626"/>
       </svg>
-      <img :src="userImage" alt="UserImage" class="menu-items round-image">
+      <img :src="userImage" alt="UserImage" class="menu-items round-image" @click="handlerUserClicked">
       <svg width="26" height="21" viewBox="0 0 26 21" fill="none" xmlns="http://www.w3.org/2000/svg"
            @click="handlerLogout" class="menu-items">
         <path
@@ -39,12 +47,19 @@ export default {
   },
   computed: {
     ...mapState({
-      userImage: state=>state.user?.data?.avatar_url
+      // userImage: state=>state.user?.data?.avatar_url,
+      userImage: state=>state.user?.userImage,
     })
   },
   methods: {
     handlerLogout() {
       this.$store.dispatch('user/dispatchUserLogout')
+    },
+    handlerUserClicked(){
+      this.$router.push({name:'user-own-repos'})
+    },
+    handlerHomeClick(){
+      this.$router.push({name:'home'})
     }
   }
 }

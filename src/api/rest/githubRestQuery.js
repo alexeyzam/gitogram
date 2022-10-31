@@ -23,7 +23,7 @@ export const getRecommendedRepo = (
 
 export const getUserLikedRepo = () => {
     const params = new URLSearchParams()
-    params.set('per_page', '10')
+    // params.set('per_page', '10')
     return makeRequest({
 
         url: `${urlPaths.getStarredRepo}?${params}`
@@ -64,4 +64,13 @@ export const getRepoReadme=({owner,repo})=>{
     const headers={'accept': 'application/vnd.github.v3.html+json'}
     const url=`/repos/${owner}/${repo}/readme`
     return makeRequest({url,method:'get',data:{},headers})
+}
+
+export const getUserOwnRepos = () => {
+    const params = new URLSearchParams()
+    // params.set('per_page', '10')
+    const headers={'accept':'application/vnd.github+json'}
+    return makeRequest({
+        url: `${urlPaths.getUserRepos}?${params}`
+    })
 }
