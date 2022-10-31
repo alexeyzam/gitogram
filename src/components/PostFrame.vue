@@ -1,7 +1,10 @@
 <template>
-  <div class="post-frame-container">
-    <h1 class="post-frame-header">{{ repo.name }}</h1>
+<!--  <div class="post-frame-container">-->
+  <div>
+  <div class="post-frame-header">{{ repo.name }}</div>
+    <div v-if="repo.description" class="c-repo-description">
     <p>{{ repo.description }}</p>
+    </div>
 
     <div class="post-buttons">
       <BtnWithCount
@@ -87,15 +90,26 @@ export default {
 </script>
 
 <style scoped>
-.post-frame-container {
-  background: #FFFFFF;
-  border: 1px solid #F1F1F1;
-  box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.07);
-  border-radius: 10px;
-  padding: 24px 20px;
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
+.post-frame-header{
+  width: 232px;
+  height: 28px;
+
+  /* Title / Bold */
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 28px;
+  margin-top: 0px;
+  margin-left: 0px;
+  color: #292929;
+}
+.c-repo-description{
+  font-family: 'Inter';
+  font-style: normal;
+  font-size: 16px;
+  line-height: 26px;
+  color: #262626;
 }
 
 .post-buttons {

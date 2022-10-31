@@ -1,11 +1,11 @@
 <template>
   <div class="wrapper-toggler">
-  <div @click="$emit('update:modelValue',!this.modelValue)" class="issue-button">
+  <div @click="handlerClickToggle" class="issue-button">
     <div class="button-item">
-    <span>{{ modelValue ? 'Hide Issues' : 'Show issues' }}</span>
+    <span>{{ isViewIssue ? 'Hide issues':'Show issues'  }}</span>
     </div>
     <div class="button-item">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" :class="modelValue?'':'rotate'"
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" :class="isViewIssue?'':'rotate'"
          xmlns="http://www.w3.org/2000/svg">
       <path d="M12.7996 10.2603C12.5177 10.5639 12.0432 10.5814 11.7397 10.2996L8 6.77348L4.26033
       10.2996C3.9568 10.5814 3.48225 10.5639 3.2004 10.2603C2.91855 9.9568 2.93612 9.48225 3.23966
@@ -21,12 +21,18 @@
 <script>
 export default {
   name: "Toggler",
-  props: {
-    modelValue:{
-      type:Boolean,
-      default:false,
+  data(){
+    return {
+      isViewIssue:false
     }
   },
+  methods:{
+    handlerClickToggle(){
+      this.isViewIssue=!this.isViewIssue
+      this.$emit('update:modelValue',this.isViewIssue)
+    }
+  }
+
 }
 </script>
 

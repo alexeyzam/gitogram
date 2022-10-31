@@ -1,10 +1,12 @@
 import {createStore} from 'vuex';
 import {getRepoReadme, getRecommendedRepo, getUserLikedRepo} from "@/api/rest/githubRestQuery";
 import user from './modules/user'
+import userRepos from "@/store/modules/userRepos";
 import {getReposData} from "@/helpers/storeFunctions";
 export default createStore({
     modules:{
-        user
+        user,
+        userRepos,
     },
     state:{
         likedRepos:[],

@@ -19,8 +19,8 @@
       <div class="content-col">
       <div v-for="repo in likedRepo" class="content">
         <Content :repo="repo">
-          <template v-slot:postFrame>
-              <PostFrame :repo="repo"/>
+          <template v-slot:postFrame >
+              <PostFrame :repo="repo" class="post-frame-container"/>
           </template>
         </Content>
       </div>
@@ -81,6 +81,17 @@ export default {
 
 <style scoped>
 @import "@/styles/app.css";
+
+.post-frame-container {
+  background: #FFFFFF;
+  border: 1px solid #F1F1F1;
+  box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.07);
+  border-radius: 10px;
+  padding: 24px 20px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
 
 
 .header{
