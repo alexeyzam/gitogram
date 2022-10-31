@@ -51,6 +51,7 @@
     "jsdom": "^20.0.2",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
+    "storybook-vue3-router": "^2.3.1",
     "vue-loader": "^16.8.3",
     "vue-template-compiler": "^2.7.13"
   },
@@ -68,6 +69,8 @@
       ".*\\.(vue)$": "@vue/vue3-jest",
       ".*\\.(js)$": "babel-jest"
     },
-    "transformIgnorePatterns": ["node_modules/(?!axios)"]
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)"
+    ]
   }
 }
